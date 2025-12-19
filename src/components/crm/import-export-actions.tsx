@@ -138,7 +138,7 @@ export function ImportExportActions() {
       const { data: leads, error } = await supabase
         .from("leads")
         .select("*")
-        .eq("user_id", user.id)
+        .eq("user_id", user.id as string)
 
       if (error) throw error
 
