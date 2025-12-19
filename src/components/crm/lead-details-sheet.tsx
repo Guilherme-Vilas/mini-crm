@@ -67,11 +67,11 @@ export function LeadDetailsSheet({
       const { data, error } = await supabase
         .from("leads")
         .select("*")
-        .eq("id", leadId)
+        .eq("id" as any, leadId as any)
         .single()
 
       if (error) throw error
-      return data as Lead
+      return data as unknown as Lead
     },
     enabled: open && !!leadId,
   })
@@ -82,11 +82,11 @@ export function LeadDetailsSheet({
       const { data, error } = await supabase
         .from("interactions")
         .select("*")
-        .eq("lead_id", leadId)
+        .eq("lead_id" as any, leadId as any)
         .order("created_at", { ascending: false })
 
       if (error) throw error
-      return (data || []) as Interaction[]
+      return (data || []) as unknown as Interaction[]
     },
     enabled: open && !!leadId,
   })
@@ -110,7 +110,7 @@ export function LeadDetailsSheet({
 
   const createInteractionMutation = useMutation({
     mutationFn: async (data: InteractionFormData) => {
-      const { error } = await supabase.from("interactions").insert(data)
+      const { error } = await supabase.from("interactions").insert(data as any)
 
       if (error) throw error
     },

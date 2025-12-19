@@ -64,7 +64,7 @@ export function NewLeadDialog({ open, onOpenChange }: NewLeadDialogProps) {
       const { error } = await supabase.from("leads").insert({
         ...data,
         user_id: user.id,
-      })
+      } as any)
 
       if (error) throw error
     },

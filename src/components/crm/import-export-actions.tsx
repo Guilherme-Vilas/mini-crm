@@ -29,7 +29,7 @@ export function ImportExportActions() {
         status: lead.status || "new",
       }))
 
-      const { error } = await supabase.from("leads").insert(leadsWithUserId)
+      const { error } = await supabase.from("leads").insert(leadsWithUserId as any)
 
       if (error) throw error
     },
@@ -135,10 +135,11 @@ export function ImportExportActions() {
       } = await supabase.auth.getUser()
       if (!user) throw new Error("Usuário não autenticado")
 
+      const userId = user.id
       const { data: leads, error } = await supabase
         .from("leads")
         .select("*")
-        .eq("user_id", user.id as string)
+        .eq("user_id" as any, userId as any)
 
       if (error) throw error
 

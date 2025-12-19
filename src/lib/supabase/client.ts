@@ -17,6 +17,6 @@ if (!supabaseAnonKey || supabaseAnonKey === 'your_supabase_anon_key') {
 }
 
 export function createClient() {
-  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+  return createBrowserClient<Database>(supabaseUrl!, supabaseAnonKey!)
 }
 

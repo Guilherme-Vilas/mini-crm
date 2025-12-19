@@ -54,21 +54,22 @@ export function KanbanBoard() {
       } = await supabase.auth.getUser()
       if (!user) return []
 
+      const userId = user.id
       const { data, error } = await supabase
         .from("leads")
         .select("*")
-        .eq("user_id", user.id as string)
+        .eq("user_id" as any, userId as any)
         .order("created_at", { ascending: false })
 
       if (error) throw error
-      return (data || []) as Lead[]
+      return (data || []) as unknown as Lead[]
     },
   })
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: LeadStatus }) => {
-      const { error } = await supabase
-        .from("leads")
+      const { error } = await (supabase
+        .from("leads") as any)
         .update({ status })
         .eq("id", id)
 
